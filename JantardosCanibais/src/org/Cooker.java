@@ -3,11 +3,11 @@ package org;
 public class Cooker extends Thread {
 
 	private Buffer Buffer;
-	int tamanho;
+	int size;
 
 	public Cooker(Buffer Buffer, int tamanho) {
 		this.Buffer = Buffer;
-		this.tamanho = tamanho;
+		this.size = tamanho;
 	}
 
 	@Override
@@ -24,10 +24,10 @@ public class Cooker extends Thread {
 
 				synchronized (Buffer) {
 					if (Buffer.getPorcoes() == 0) {
-						Buffer.deposita(tamanho);
+						Buffer.deposit(size);
 						Buffer.notifyAll();
 						System.out
-								.println("Cooker deposit on the pot and now have "
+								.println("Cooker " + this.getId() + " deposit on the pot and now have "
 										+ Buffer.getPorcoes() + "portions");
 					}
 				}

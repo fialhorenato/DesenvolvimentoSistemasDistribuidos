@@ -4,14 +4,21 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		int tamanho = 10;
+		int size = 10;
+		int numberOfCannibals = 20;
+		int numberOfCookers = 10;
 		
 		Buffer Buffer = new Buffer();
-		Cooker Cooker = new Cooker(Buffer, tamanho);
-		Cannibal Eater = new Cannibal(Buffer);
+		
+		for (int i = 0; i < numberOfCookers; i++) {
+			new Cooker(Buffer, size).start();;
+		}
+		
+		for (int i = 0; i < numberOfCannibals; i++) {
+			new Cannibal(Buffer).start();
+		}
+		
 
-		Cooker.start();
-		Eater.start();
 
 	}
 

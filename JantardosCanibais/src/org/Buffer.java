@@ -2,24 +2,24 @@ package org;
 
 public class Buffer {
 
-		int porcoes;
+		int maxSize;
 		
 		public Buffer() {};
 		
 		public int getPorcoes() {
-			return porcoes;
+			return maxSize;
 		}
 
-		public void setPorcoes(int porcoes) {
-			this.porcoes = porcoes;
+		public void setPorcoes(int size) {
+			this.maxSize = size;
 		}
 		
-		public synchronized void retira(int num) {
-			this.porcoes = this.porcoes - num;
+		public synchronized void withdraw(int num) {
+			this.maxSize = this.maxSize - num;
 		}
 		
-		public synchronized void deposita (int num) {
-			this.porcoes = this.porcoes + num;	
+		public synchronized void deposit(int num) {			
+			this.maxSize = this.maxSize + num;	
 		}		
 		
 }
