@@ -30,7 +30,7 @@ public class Passageiro extends Thread {
 
 			System.out.println("Passageiro " + this.getId()
 					+ " embarcou no carro!");
-			
+
 			carro.andar();
 			carro.notifyAll();
 
@@ -61,7 +61,7 @@ public class Passageiro extends Thread {
 
 			System.out.println("Passageiro " + this.getId()
 					+ " desembarcou do carro!");
-			
+
 			carro.notifyAll();
 			try {
 				carro.wait();
