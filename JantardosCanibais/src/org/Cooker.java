@@ -14,7 +14,7 @@ public class Cooker extends Thread {
 	public void run() {
 		synchronized (Buffer) {
 			while (true) {
-				while (Buffer.getPorcoes() >= this.size) {
+				while (Buffer.getPorcoes() != 0) {
 					try {
 						Buffer.wait();
 					} catch (InterruptedException e) {
@@ -22,22 +22,15 @@ public class Cooker extends Thread {
 					}
 				}
 
-				synchronized (Buffer) {
-
-					if (Buffer.getPorcoes() >= 0) {
-						Buffer.deposit(1);
-						System.out.println("Cooker " + this.getId()
-								+ " deposit on the pot and now have "
-								+ Buffer.getPorcoes() + " portions!");
-						Buffer.notifyAll();
-						try {
-							Buffer.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+				if (Buffer.getPorcoes() == 0) {
+					Buffer.deposit(this.size);
+					System.out.println("Cooker " + this.getId() + " deposited "
+							+ this.size + " portions on the pot and now have "
+							+ Buffer.getPorcoes() + " portions!");
+					Buffer.notifyAll();
 
 				}
+
 			}
 		}
 	}
