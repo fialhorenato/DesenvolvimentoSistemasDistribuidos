@@ -4,9 +4,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		int size = 10;
-		int numberOfCannibals = 20;
-		int numberOfCookers = 10;
+		int size = 50;
+		int numberOfCannibals = 500;
+		int numberOfCookers = 50;
 		
 		Buffer Buffer = new Buffer();
 		
