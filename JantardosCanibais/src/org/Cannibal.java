@@ -22,10 +22,16 @@ public class Cannibal extends Thread {
 
 				if (Buffer.getPorcoes() != 0) {
 					Buffer.withdraw(1);
-					Buffer.notifyAll();
+										
 					System.out
 							.println("Cannibal " + this.getId() + " just ate and the pot now have "
 									+ Buffer.getPorcoes() + " portions!");
+					Buffer.notifyAll();
+					try {
+						Buffer.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 
 			}
