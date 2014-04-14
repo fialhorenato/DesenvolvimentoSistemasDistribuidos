@@ -33,12 +33,6 @@ public class Passageiro extends Thread {
 
 			carro.andar();
 			carro.notifyAll();
-
-			try {
-				carro.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -63,11 +57,6 @@ public class Passageiro extends Thread {
 					+ " desembarcou do carro!");
 
 			carro.notifyAll();
-			try {
-				carro.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 
@@ -77,6 +66,12 @@ public class Passageiro extends Thread {
 		while (true) {
 			embarcar();
 			desembarcar();
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
