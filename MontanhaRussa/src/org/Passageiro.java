@@ -2,77 +2,30 @@ package org;
 
 public class Passageiro extends Thread {
 
-	private Carro carro;
-	private int estado;
+	private MontanhaRussa m;
+	private int estado = 1;
 
-	public Passageiro(Carro carro) {
-		this.carro = carro;
-		this.estado = 1;
-	}
-
-	public void embarcar() {
-
-		synchronized (carro) {
-
-			while (carro.getEstado() == 2 || carro.getEstado() == 3
-					|| this.estado == 2) {
-				try {
-					carro.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
-			if (carro.getEstado() == 1) {
-				carro.carregar();
-				this.estado = 2;
-			}
-
-			System.out.println("Passageiro " + this.getId()
-					+ " embarcou no carro!");
-
-			carro.andar();
-			carro.notifyAll();
-		}
-	}
-
-	public void desembarcar() {
-
-		synchronized (carro) {
-
-			while (carro.getEstado() != 3) {
-				try {
-					carro.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-
-			if (carro.getEstado() == 3 && this.estado == 2) {
-				carro.descarregar();
-				this.estado = 1;
-			}
-
-			System.out.println("Passageiro " + this.getId()
-					+ " desembarcou do carro!");
-
-			carro.notifyAll();
-		}
+	public Passageiro(MontanhaRussa m) {
+		this.m = m;
 	}
 
 	@Override
 	public void run() {
-		super.run();
 		while (true) {
-			embarcar();
-			desembarcar();
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (estado == 1) {
+				m.embarcar(this.getId());
+				estado = 2;
+			}
+
+			if (estado == 2) {
+				m.desembarcar(this.getId());
+				estado = 1;
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
-
 }
