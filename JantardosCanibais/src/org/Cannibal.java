@@ -10,33 +10,16 @@ public class Cannibal extends Thread {
 
 	@Override
 	public synchronized void run() {
-		synchronized (Buffer) {
 
-			while (true) {
-				while (Buffer.getPorcoes() == 0) {
-					try {
-						Buffer.wait();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-
-				if (Buffer.getPorcoes() > 0) {
-					Buffer.withdraw(1);
-					System.out.println("Cannibal " + this.getId()
-							+ " just ate 1 portion and the pot now have "
-							+ Buffer.getPorcoes() + " portions!");
-					Buffer.notifyAll();
-					try {
-						Thread.sleep(2000);
-						Buffer.wait();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-				}
-
+		while (true) {
+			Buffer.withdraw(1, this.getId());
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
 		}
+
 	}
 }
