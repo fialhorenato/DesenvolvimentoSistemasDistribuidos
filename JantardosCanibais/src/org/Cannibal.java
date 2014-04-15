@@ -9,10 +9,9 @@ public class Cannibal extends Thread {
 	}
 
 	@Override
-	public synchronized void run() {
-
+	public void run() {
 		while (true) {
-			Buffer.withdraw(1, this.getId());
+			Buffer.withdraw(this.getId());
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {

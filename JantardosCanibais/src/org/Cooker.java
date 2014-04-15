@@ -13,7 +13,7 @@ public class Cooker extends Thread {
 	@Override
 	public void run() {
 		while (true) {
-			Buffer.deposit(size, this.getId());
+			Buffer.deposit(this.getId());
 		}
 	}
 }

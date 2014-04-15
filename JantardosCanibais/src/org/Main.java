@@ -8,7 +8,7 @@ public class Main {
 		int numberOfCannibals = 6;
 		int numberOfCookers = 1;
 
-		Buffer Buffer = new Buffer();
+		Buffer Buffer = new Buffer(size);
 
 		for (int i = 0; i < numberOfCookers; i++) {
 			new Cooker(Buffer, size).start();;

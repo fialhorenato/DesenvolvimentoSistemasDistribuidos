@@ -3,45 +3,48 @@ package org;
 public class Buffer {
 
 		private int maxSize;
+		private int actual = 0;
 
-		public Buffer() {};
-
-		public synchronized int getPorcoes() {
-			return maxSize;
+		public Buffer(int maxSize) {
+			this.maxSize = maxSize;
+			this.actual = maxSize;
 		}
 
-		public synchronized void setPorcoes(int size) {
-			this.maxSize = size;
-		}
-
-		public synchronized void withdraw(int num, long id) {
+		public synchronized void withdraw(long id) {
 			
-			if (maxSize == 0) {
+			while (this.actual == 0) {
 				try {
 					this.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			} else {
-				this.maxSize = this.maxSize - num;
-				this.notifyAll();
-				System.out.println("Cannibal " + id + " ate " + num + " portions in the pot!" );
 			}
 			
+			if (this.actual > 0) {
+				this.actual--;				
+				System.out.println("Cannibal " + id + " ate a portion in the pot!" );
+				System.out.println("STATUS === " + this.actual + " / " + this.maxSize );
+			}
+			
+			this.notifyAll();
 		}
 
-		public synchronized void deposit(int num, long id) {	
-			if (maxSize != 0) {
+		public synchronized void deposit(long id) {	
+			while (this.actual != 0) {
 				try {
 					this.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			} else {
-				this.maxSize = this.maxSize + num;
-				this.notifyAll();
-			System.out.println("Cooker " + id + " deposit " + num + " portions in the pot!" );
 			}
+			
+			if (this.actual == 0) {
+				this.actual = this.maxSize;
+				System.out.println("Cooker " + id + " filled the pot!" );
+				System.out.println("STATUS === " + this.actual + " / " + this.maxSize );
+			}
+			
+			this.notifyAll();
 			
 		}		
 
